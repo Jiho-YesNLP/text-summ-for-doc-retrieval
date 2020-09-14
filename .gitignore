@@ -1,0 +1,12 @@
+data/*
+!data/trec_ref
+!data/download.py
+doc/
+__pycache__/
+rsync_up.sh
+.vim/
+.vscode/
+*.code-workspace
+sftp.json
+uts-api-key.txt
+.pylintrc

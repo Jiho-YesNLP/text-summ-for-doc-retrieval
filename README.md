@@ -6,7 +6,8 @@ Neural document matching model and neural text summarization model for scoring d
 
 - Stanford CoreNLP library
 - Python3.7+
-- PyTorch 1.4
+- PyTorch (v. 1.4.0)
+- Huggingface Transformers (v. 3.0.2)
 - Solr
 
 
@@ -35,7 +36,7 @@ TREC relevance judgment files are in [data/trec_ref/](data/trec_ref].
 
 **BMET embeddings**
 
-We use the BMET embeddings which are pretrained embeddings for the PubMed articles annotated with the MeSH (Medical Subject Headings) entities. This embeddings contain MeSH codes in this format: `𝛆mesh_D00001`. You can loaded pretrained the BMET embeddings from [here](https://drive.google.com/file/d/1s1Axugg--VoKq-pWzI95wGIWe0tPs1q0/view?usp=sharing)
+We have trained special word embeddings for this project, which we dubbed the BMET embeddings. We trained this model with the biomedical literature along with the MeSH (Medical Subject Headings) entity codes used for biomedical concept annotations. The MeSH codes are encoded in a special way, e.g., `𝛆mesh_D00001` for `D00001`, and the vectors for entity codes share the same vector space with the regular words. You can download pretrained BMET embeddings from [here](https://drive.google.com/file/d/1s1Axugg--VoKq-pWzI95wGIWe0tPs1q0/view?usp=sharing) 
 
 ### Install Stanford CoreNLP
 
@@ -52,7 +53,7 @@ Replace `[path_to]` with the path you saved the Stanford CoreNLP. `CORENLP_HOME`
 
 ### Run preprocessing.py
 
-In order to run proprocessing script, PubMed corpus needs to be imported in Solr database. Instruction to install and import PubMed corpus into a Solr core is available in this [documentation](https://tinyurl.com/yyxwx8wv).
+In order to run proprocessing script, PubMed corpus needs to be imported into a Solr database. Instruction to install and import PubMed corpus into a Solr core is available in this [documentation](https://tinyurl.com/yyxwx8wv). You can also refer to the [script](index_docs_solr.py) we used for indexing PubMed documents in the Solr system.
 
 `preprocessing.py` will generate training datasets split into train/valid sets. Preprocessed datsets are also available for downloading [[here](https://drive.google.com/file/d/1bHRhDV-SYJysr_w7mdGg7Yc4ep__S0gj/view?usp=sharing)]
 
@@ -115,3 +116,8 @@ Jun01 12:09 utils INFO: [ steps: 200 loss: 6.5567 lr p0/0.000010, p1/0.001000 ti
 ...
 ```
 
+## Evaluation
+
+`doc_scorer` runs an optimized model on the TREC evaluation sets. The print-outs can be used for evaluating the document re-ranking performance with the standard TREC evaluation methods.
+
+Tools commonly used by the TREC community for evaluating an ad hoc retrieval runs can be obtained from [here](https://trec.nist.gov/trec_eval/).
