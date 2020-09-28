@@ -1,6 +1,8 @@
-# Document Reranking for Precision Medicine with Neural Matching and Faceted Summarization
+# Literature Retrieval for Precision Medicine with Neural Matching and Faceted Summarization (2020 EMNLP Findings, long-paper)
 
 Neural document matching model and neural text summarization model for scoring documents in reranking purpose; `REL` is a document-relevance classification model. `EXT` is an extractive summarization model which identifies relevant words to the trained theme from the source document. `ABS` is an abstractive model which generates query-like sentences by given topic signal.
+
+*If you have any question about this code or any topic relate to this paper, please don't hesitate to send me (jiho dot noh at uky dot edu) an email.*
 
 ## Requirements
 
@@ -22,7 +24,9 @@ We use the PubMed abstracts and the TREC-Precision Medicine document retrieval r
 
 **PubMed**
 
-Run [download script](data/pubmed/download.py); it will download the compressed PubMed files up to the specified numeric argument given. (e.g., pubmed20n[0001--1015].xml.gz)
+Run this [script](data/pubmed/download.py) to download the compressed PubMed files. 
+
+e.g., Following will download PubMed files numbered with 0001--1015.
 
 ```python
 mkdir -p data/pubmed/
@@ -36,7 +40,9 @@ TREC relevance judgment files are in [data/trec_ref/](data/trec_ref].
 
 **BMET embeddings**
 
-We have trained special word embeddings for this project, which we dubbed the BMET embeddings. We trained this model with the biomedical literature along with the MeSH (Medical Subject Headings) entity codes used for biomedical concept annotations. The MeSH codes are encoded in a special way, e.g., `𝛆mesh_D00001` for `D00001`, and the vectors for entity codes share the same vector space with the regular words. You can download pretrained BMET embeddings from [here](https://drive.google.com/file/d/1s1Axugg--VoKq-pWzI95wGIWe0tPs1q0/view?usp=sharing) 
+[Download from this repo](https://github.com/romanegloo/BMET-embeddings)
+
+We have trained special word embeddings for this project, which we dubbed the BMET embeddings. We trained this model with the biomedical literature along with the MeSH (Medical Subject Headings) entity codes used for biomedical concept annotations. The MeSH codes are encoded in a special way, e.g., `𝛆mesh_D00001` for `D00001`, and the vectors for entity codes share the same vector space with the regular words. You can download pretrained BMET embeddings from the previous link.
 
 ### Install Stanford CoreNLP
 
@@ -118,6 +124,25 @@ Jun01 12:09 utils INFO: [ steps: 200 loss: 6.5567 lr p0/0.000010, p1/0.001000 ti
 
 ## Evaluation
 
-`doc_scorer` runs an optimized model on the TREC evaluation sets. The print-outs can be used for evaluating the document re-ranking performance with the standard TREC evaluation methods.
+`doc_scorer` runs with an optimized model on the TREC evaluation sets. It save the outputs of ranked documents that can be used for evaluating the document re-ranking performance using the standard TREC evaluation methods.
 
 Tools commonly used by the TREC community for evaluating an ad hoc retrieval runs can be obtained from [here](https://trec.nist.gov/trec_eval/).
+
+
+## Acknowledgements
+
+If you use this code or find this effort useful or relevant to your research, please cite the following paper:
+
+> Jiho Noh and Ramakanth Kavuluru, "Literature Retrieval for Precision Medicine with Neural Matching and Faceted Summarization"
+
+```
+@inproceedings{noh-2020-literature,
+    title = "Literature Retrieval for Precision Medicine with Neural Matching and Faceted Summarization"
+    author = "Jiho Noh and Ramakanth Kavuluru"
+    booktitle = "Findings of the 2020 Conference on Empirical Methods in Natural Language Processing",
+    month = oct,
+    year = "2020",
+    address = "Online",
+    publisher = "Association for Computational Linguistics",
+}
+```

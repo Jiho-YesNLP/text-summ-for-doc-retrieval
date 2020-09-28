@@ -66,7 +66,6 @@ def train_encoder(mdl, crit, optim, sch, stat):
             sch.step(stat.avg_train_loss)
         if stat.steps % args.valid_interval == 0:
             valid_ret(mdl, crit, optim, stat)
-            mdl.train()
 
 
 def valid_ret(mdl, crit, optim, stat):
@@ -88,6 +87,7 @@ def valid_ret(mdl, crit, optim, stat):
     stat.report(mode='valid', model_type=args.model_type)
     if stat.is_best():
         utils.save_model(mdl, args, optim, stat)
+    mdl.train()
 
 
 def train_abs(mdl, crit, optim, sch, stat):
@@ -183,9 +183,9 @@ if __name__ == '__main__':
                          help='number of epochs to train')
     runtime.add_argument('--log_interval', type=int, default=100,
                          help='Logging interval in training steps')
-    runtime.add_argument('--valid_interval', type=int, default=1000,
+    runtime.add_argument('--valid_interval', type=int, default=2000,
                          help='Validation interval in training steps')
-    runtime.add_argument('--max_valid_steps', type=int, default=99999,
+    runtime.add_argument('--max_valid_steps', type=int, default=400,
                          help='Maximum number of validation steps')
     # Model (general)
     mdl_cfg = parser.add_argument_group('Model (General)')

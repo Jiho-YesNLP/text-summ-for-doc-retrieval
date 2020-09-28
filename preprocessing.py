@@ -329,7 +329,7 @@ def lookup_mesh(phrase, client, mapping):
     return mapping[phrase]
 
 
-def read_trec_ref(dir_trec, years):
+def read_trec_ref(dir_trec, years=None):
     """Read topics and qrels, look up MeSH terms from the fields, and return 
     a list of topics along with the their document relevance judgments"""
     logger.info('=== Reading TREC reference files '.ljust(80, '='))
@@ -338,7 +338,8 @@ def read_trec_ref(dir_trec, years):
         logger.warning('Reading topics from a cached file. If you want to '
                        're-construct MeSH mapping, delete the cached file '
                        'and run this script again.')
-        return pickle.load(open(pjoin(dir_trec, 'trec_ref.pkl'), 'rb'))
+        topics = pickle.load(open(pjoin(dir_trec, 'trec_ref.pkl'), 'rb'))
+        return {k: v for k, v in topics.items() if k[1:5] in years}
 
     topics = dict()
     fields = ['disease', 'gene', 'demographic']

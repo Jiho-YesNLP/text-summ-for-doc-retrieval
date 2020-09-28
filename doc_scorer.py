@@ -281,7 +281,7 @@ if __name__ == '__main__':
     # Initialize Solr client
     logger.debug('Initializing a Solr client')
     solr_client = pysolr.Solr(SOLR_URI)
-    # solr_mlt = pysolr.Solr(SOLR_URI, search_handler='/mlt')
+    solr_mlt = pysolr.Solr(SOLR_URI, search_handler='/mlt')
 
     # Initialize example builder
     EXS_BUILDER = ExsBuilder(file_emb=args.f_emb)
@@ -295,28 +295,34 @@ if __name__ == '__main__':
         # Retrieve documents
         ret_docs = {}
 
-        for qid, data in exs.items():
-            q = ' '.join(data['fields'][:3])
-            res = solr_client.search(q, **SOLR_Q_PARAMS)
-            ret_docs[qid] = res
-            for r in res:
-                scoreboard[qid][r['id']] = {'scores': [r['score']]}
-
-        # # debug. more like this
         # for qid, data in exs.items():
         #     q = ' '.join(data['fields'][:3])
-        #     SOLR_Q_PARAMS['rows'] = 1
         #     res = solr_client.search(q, **SOLR_Q_PARAMS)
+        #     ret_docs[qid] = res
+        #     print(qid, len(res))
         #     for r in res:
-        #         this = r['id']
-        #         break
-        #     q = 'id:{}'.format(this)
-        #     similar = solr_mlt.more_like_this(q, rows=10, fl="*,score",
-        #                                       mltfl='AbstractText,ArticleTitle')
-
-        #     ret_docs[qid] = similar
-        #     for r in similar:
         #         scoreboard[qid][r['id']] = {'scores': [r['score']]}
+
+        # debug. more like this
+        for qid, data in exs.items():
+            q = ' '.join(data['fields'][:3])
+            SOLR_Q_PARAMS['rows'] = 10
+            res = solr_client.search(q, **SOLR_Q_PARAMS)
+            q = ' '.join(['id:{}'.format(r['id']) for r in res])
+            params = {
+                'mlt.mindf': 100,   
+                'mlt.boost': 'true'
+            }
+            print('mlt:', qid)
+            similar = solr_mlt.more_like_this(q,
+                                              rows=args.solr_rows,
+                                              fl="*,score",
+                                              mltfl='AbstractText',
+                                              **params)
+
+            ret_docs[qid] = similar
+            for r in similar:
+                scoreboard[qid][r['id']] = {'scores': [r['score']]}
 
         # Run REL
         if args.mdl_rel != '':
