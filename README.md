@@ -122,6 +122,15 @@ Jun01 12:09 utils INFO: [ steps: 200 loss: 6.5567 lr p0/0.000010, p1/0.001000 ti
 ...
 ```
 
+## Analysis
+
+![Heatmap of classification scores by EXT](https://user-images.githubusercontent.com/1327993/94440578-d87cfe80-016f-11eb-9468-a6499c3eab43.png)
+
+![Attention heatmap produced by [unused0] signal (topic of disease)](https://user-images.githubusercontent.com/1327993/94440807-0a8e6080-0170-11eb-8976-c6954a4e12c3.png)
+
+![Attention heatmap produced by [unused1] signal (topic of generic variants and gene regulations)](https://user-images.githubusercontent.com/1327993/94440820-0cf0ba80-0170-11eb-87d4-74e60f0c9cb2.png)
+
+
 ## Evaluation
 
 `doc_scorer` runs with an optimized model on the TREC evaluation sets. It save the outputs of ranked documents that can be used for evaluating the document re-ranking performance using the standard TREC evaluation methods.
