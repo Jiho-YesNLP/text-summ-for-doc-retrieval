@@ -61,7 +61,7 @@ Replace `[path_to]` with the path you saved the Stanford CoreNLP. `CORENLP_HOME`
 
 In order to run proprocessing script, PubMed corpus needs to be imported into a Solr database. Instruction to install and import PubMed corpus into a Solr core is available in this [documentation](https://tinyurl.com/yyxwx8wv). You can also refer to the [script](index_docs_solr.py) we used for indexing PubMed documents in the Solr system.
 
-`preprocessing.py` will generate training datasets split into train/valid sets. Preprocessed datsets are also available for downloading [[here](https://drive.google.com/file/d/1bHRhDV-SYJysr_w7mdGg7Yc4ep__S0gj/view?usp=sharing)]
+`preprocessing.py` will generate training datasets split into train/valid sets. Preprocessed datsets are also available for downloading [[here](https://drive.google.com/drive/folders/1xU13DMbNRReYWTvTsJ98VgnyQ5QjDjaP?usp=sharing)]
 
 ```shell script
 python preprocessing.py --dir_out [PATH_OUT] --dir_pubmed [PATH_PUBMED] --dir_trec [PATH_TREC] --file_emb [PATH_EMB]
