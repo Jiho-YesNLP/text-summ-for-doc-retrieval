@@ -4,6 +4,10 @@ Neural document matching model and neural text summarization model for scoring d
 
 *If you have any question about this code or any topic relate to this paper, please don't hesitate to send me (jiho dot noh at uky dot edu) an email.*
 
+
+[![DOI](https://zenodo.org/badge/294707847.svg)](https://zenodo.org/badge/latestdoi/294707847)
+
+
 ## Requirements
 
 - Stanford CoreNLP library
